@@ -15,8 +15,12 @@ This project is motivated by the long process of assigning new teams in between 
 2. Storage of players (can be a file at first
 3. Interface to select attending players
 4. Interface to output teams, ideally with fair skill levels
+5. Adjust for number of courts we have 
 
 ## Additional Features 
 1. Autodeletion of players after they graduate
 2. AI to assess player skill
 3. Host Tournaments
+4. Adjust skill level based on result
+5. Make sure people resting are assigned to play
+
