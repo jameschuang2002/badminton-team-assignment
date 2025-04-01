@@ -25,6 +25,7 @@ function getPlayers() {
 }
 
 var all_players;
+
 window.addEventListener("load", function(){
     let h1 = document.querySelector("h1");
     getPlayers().then((players) => {
@@ -35,10 +36,33 @@ window.addEventListener("load", function(){
         h1.innerHTML = player_str;
         all_players = players;
 
-        shuffleArray(all_players); 
+        // setup dropdown menu
+        let players_dropdown = document.querySelector("div#players_dropdown_div");
+        let dropdown_menu = players_dropdown.querySelector("ul");
+        for(let player of players){
+            let li = document.createElement("li");
+            dropdown_menu.appendChild(li);
+
+            let dropdown_item = document.createElement("a");
+            dropdown_item.class = "dropdown-item";
+            li.appendChild(dropdown_item)
+
+            let checkbox = document.createElement("input")
+            checkbox.type = "checkbox";
+            checkbox.class = "form-check-input me-2";
+            checkbox.value = player.name;
+            checkbox.checked="yes";
+            
+            dropdown_item.appendChild(checkbox);
+            dropdown_item.appendChild(document.createTextNode(" " + player.name))
+        }
+
+        // setup initial teams and table structure
+        shuffleArray(players); 
+
         let team_table = document.querySelector("table#team_table");
         let table_body = team_table.querySelector("tbody")
-
+        
         for(let i = 0; i < all_players.length / 2; i++){
             let row = document.createElement("tr");
             team_table.appendChild(row);
@@ -58,6 +82,7 @@ window.addEventListener("load", function(){
             table_body.appendChild(row)
         }
 
+        all_players = players; // TODO: remove this variable after read from checkbox function is done
     }).catch((error) => {
         console.log("error fetching players", error)
     })
@@ -65,13 +90,12 @@ window.addEventListener("load", function(){
 
 document.getElementById("randomizeButton").onclick = function(){
     shuffleArray(all_players)
+    /* TODO: only compute on present players, remove extra rows */
     let team_table = document.querySelector("table#team_table");
     let table_body = document.querySelector("tbody");
     let rows = table_body.querySelectorAll("tr");
-    console.log(rows.length)
     for(let i = 0; i < rows.length; i++){
         team_members = rows[i].querySelectorAll("td");
-        console.log(team_members)
         team_members[0].innerHTML = all_players[i*2].name;
         team_members[1].innerHTML = all_players[i*2+1].name;
     }
