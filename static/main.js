@@ -38,7 +38,7 @@ function getPresentPlayersNames(){
     return present_players
 }
 
-function addRow(tbody, name1, name2){
+function addTeamRow(tbody, team1, team2){
     let row = document.createElement("tr");
     tbody.appendChild(row);
 
@@ -46,13 +46,25 @@ function addRow(tbody, name1, name2){
     label.scope = "row";
     row.appendChild(label)
 
-    let member1 = document.createElement("td") 
-    let member2 = document.createElement("td") 
+    let team1_member1 = document.createElement("td") 
+    let team1_member2 = document.createElement("td") 
+    let score_input = document.createElement("input")
+    score_input.type = "text";
+    score_input.id = "scoreboard";
+    let team2_member1 = document.createElement("td") 
+    let team2_member2 = document.createElement("td") 
+
     
-    member1.innerHTML = name1;
-    member2.innerHTML = name2;
-    row.appendChild(member1);
-    row.appendChild(member2);
+    team1_member1.innerHTML = team1[0];
+    team1_member2.innerHTML = team1[1];
+    team2_member1.innerHTML = team2[0];
+    team2_member2.innerHTML = team2[1];
+
+    row.appendChild(team1_member1);
+    row.appendChild(team1_member2);
+    row.appendChild(score_input)
+    row.appendChild(team2_member1);
+    row.appendChild(team2_member2);
 
     tbody.appendChild(row)
 }
@@ -97,8 +109,10 @@ window.addEventListener("load", function(){
         let team_table = document.querySelector("table#team_table");
         let table_body = team_table.querySelector("tbody")
         
-        for(let i = 0; i < all_players.length / 2; i++){
-            addRow(table_body, players[i*2].name, players[i*2+1].name);
+        for(let i = 0; i < players.length / 2 - 1; i += 2){
+            team1 = [players[i*2].name, players[i*2+1].name]
+            team2 = [players[(i+1)*2].name, players[(i+1)*2+1].name]
+            addTeamRow(table_body, team1, team2);
         }
 
     }).catch((error) => {
@@ -109,20 +123,27 @@ window.addEventListener("load", function(){
 document.getElementById("randomizeButton").onclick = function(){
     const present_players_names = getPresentPlayersNames();
     shuffleArray(present_players_names)
-    /* TODO: only compute on present players, remove extra rows */
+
     let team_table = document.querySelector("table#team_table");
     let table_body = document.querySelector("tbody");
     let rows = table_body.querySelectorAll("tr");
+    
+    // TODO: use existing rows not deleting all 
     for(let i = 0; i < rows.length; i++){
-        if(i * 2 >= present_players_names.length){
-            table_body.removeChild(rows[i])
-        } else{
-            team_members = rows[i].querySelectorAll("td");
-            team_members[0].innerHTML = present_players_names[i*2];
-            team_members[1].innerHTML = present_players_names[i*2+1];
-        }
+        table_body.removeChild(rows[i])
     }
-    for(let i = 0; i < (present_players_names.length - rows.length * 2)/2; i++){
-        addRow(table_body, present_players_names[(rows.length + i) * 2], present_players_names[(rows.length + i) * 2 + 1])
+    
+    // TODO: this currently will write out of bound and handled by the next for 
+    for(let i = 0; i < present_players_names.length; i+=4){
+        let team1 = [present_players_names[i], present_players_names[i+1]]
+        let team2 = [present_players_names[i+2], present_players_names[i+3]]
+        addTeamRow(table_body, team1, team2);
+    }
+
+    rows = table_body.querySelectorAll("tr")
+    for (let col of rows[rows.length-1].querySelectorAll("td")){
+        if(col.innerHTML == "undefined"){
+            col.innerHTML = "";
+        }
     }
 }
