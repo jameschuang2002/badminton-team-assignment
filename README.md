@@ -16,6 +16,11 @@ This project is motivated by the long process of assigning new teams in between 
 3. Interface to select attending players
 4. Interface to output teams, ideally with fair skill levels
 5. Adjust for number of courts we have 
+6. Create user login system
+7. Allow creating groups, groups have permissions to certain users 
+8. Database (Mongodb or SQL)
+9. Predict chance of winning, adjust skill level based on results, sort of like rating
+10. user account, view competition history, AI for improvement feedback?
 
 ## Additional Features 
 1. Autodeletion of players after they graduate
