@@ -70,13 +70,13 @@ function addTeamRow(tbody, team1, team2){
 }
 
 window.addEventListener("load", function(){
-    let h1 = document.querySelector("h1");
+    document.querySelector("h1").innerHTML = "Welcome to Badminton Team Assignment Website";
+    
     getPlayers().then((players) => {
         let player_str = ""
         for(let player of players){
             player_str += player.name + ", ";
         }
-        h1.innerHTML = player_str;
         all_players = players;
 
         // setup dropdown menu
