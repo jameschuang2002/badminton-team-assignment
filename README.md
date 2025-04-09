@@ -4,9 +4,15 @@
 This project is motivated by the long process of assigning new teams in between badminton matches and the challenges to ensure the teams were random and fair for all players. The project aims to provide a user-friendly interface that allows easy insertion or deletion of new players, select attending players, and form equal teams to play with each other. If time permits, the project could include AI to assess player's skills and a tournament function to host tournaments. 
 
 ## Tech Stack 
-- frontend: idk
-- backend: nodejs?
+- frontend: https://getbootstrap.com/
+- backend: https://nodejs.org/en
 
+## Installation
+1. Install the newest version of nodejs from https://nodejs.org/en
+2. Run: ```npm install```
+3. Launch the server ```node server.js```
+4. Go into any browser of your choice and go to localhost:3000
+   
 ## TODOs
 1. ER diagram for data types 
 - Players
